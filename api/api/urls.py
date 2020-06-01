@@ -18,7 +18,7 @@ from django.urls import include, path
 from rest_framework import routers
 from django.contrib import admin
 from api import views
-from api.sfish.views import hello_world
+from api.sfish.views import check_moves
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
@@ -30,5 +30,5 @@ urlpatterns = [
     path('', include(router.urls)),
     url(r'^admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^moves/valid-move$', hello_world),
+    url(r'^moves/valid-move$', check_moves),
 ]

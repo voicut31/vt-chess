@@ -8,7 +8,7 @@ from api.sfish.moves import valid_move
 
 # Create your views here.
 @api_view(['GET','POST'])
-def hello_world(request):
+def check_moves(request):
         if request.method == 'POST':
                 return Response({"message": valid_move(request.data['move'], request.data['position']), "data": request.data['move'] })
         return Response({"message": valid_move('x')})
