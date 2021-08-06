@@ -1,0 +1,5 @@
+api/.idea
+api/venv
+api/api/__pycache__
+api/api/sfish/__pycache__
+vtrchess/.idea

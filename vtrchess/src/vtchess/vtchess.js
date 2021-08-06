@@ -22,24 +22,20 @@ class Vtchess extends React.Component {
 
   async onDragStop(piece, fromSquare, toSquare) {
     const Pieces = this.state.pieces;
-    var move = "";
-    if ((piece.name === "P" && piece.name === "p") {
-      move = fromSquare + toSquare;
-    } else {
-      move = piece.name toSquare;
-    }
-    let validMove = await axios.post('http://localhost:8000/moves/valid-move', {
+    const move = {
+      "pieceName" : piece.name,
+      "fromSquare": fromSquare,
+      "toSquare": toSquare
+    };
+    const validMove = await axios.post('http://localhost:8000/moves/valid-move', {
       move: move,
       position: this.state.position
     })
-      .then(function (response) {
-        if (response.data.message.valid === true) {
-          return true;
-        } else {
-          return false;
-        }
+      .then((response) => {
+        return response.data.message.valid === true;
+
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log(error);
       });
 
@@ -47,7 +43,7 @@ class Vtchess extends React.Component {
       this.setState({ pieces: [] });
       this.setState({ pieces: Pieces });
     } else {
-      let position = this.state.position;
+      const position = this.state.position;
       position.push(fromSquare + toSquare);
       this.setState({ position: position });
     }

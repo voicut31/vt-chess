@@ -1,29 +1,31 @@
 from stockfish import Stockfish
 import chess
 
-stockfish = Stockfish('/Users/voicutibea/projects/react-chess/stockfish-10/Mac/stockfish-10-64')
+stockfish = Stockfish('./../stockfish-10/Linux/stockfish_10_x64')
 
 def valid_move(data, position):
 #     stockfish.set_position(position)
 #     valid = stockfish.is_move_correct(data)
 #     bestMove = stockfish.get_best_move()
+#     return { data }
     board = chess.Board()
     for move in position:
         board.push_san(move)
-    if chess.Move.from_uci(data) in board.legal_moves:
+    uci_data = str(data['fromSquare'] + data['toSquare'])
+    if chess.Move.from_uci(uci_data) in board.legal_moves:
         valid = True
     else:
         valid = False
-    bestMove = ""
+    best_move = ""
     info = stockfish.info
     if (valid):
-        position.append(data)
+        position.append(uci_data)
         endGame = end_game(position)
         haveCheck = have_check(position)
     else:
         endGame = 'no'
         haveCheck = 0
-    return { 'valid' : valid, 'best_move' : bestMove, 'endGame' : endGame, 'haveCheck': haveCheck, 'info': info, 'position': position }
+    return { 'valid' : valid, 'best_move' : best_move, 'endGame' : endGame, 'haveCheck': haveCheck, 'info': info, 'position': position }
 
 def end_game(position):
 #     return position
