@@ -4,10 +4,6 @@ import chess
 stockfish = Stockfish('./../stockfish-10/Linux/stockfish_10_x64')
 
 def valid_move(data, position):
-#     stockfish.set_position(position)
-#     valid = stockfish.is_move_correct(data)
-#     bestMove = stockfish.get_best_move()
-#     return { data }
     board = chess.Board()
     for move in position:
         board.push_san(move)
@@ -28,7 +24,6 @@ def valid_move(data, position):
     return { 'valid' : valid, 'best_move' : best_move, 'endGame' : endGame, 'haveCheck': haveCheck, 'info': info, 'position': position }
 
 def end_game(position):
-#     return position
     board = chess.Board()
     for move in position:
         board.push_san(move)

@@ -14,6 +14,7 @@ export default class RightContainer extends React.Component {
             return (<div key={item} className={"item-" + pos}> {pos === 0 ? row + ': ' : ''} {item}</div>)
           })
         }
+        <h4>{this.props.endGame}</h4>
       </div>
     )
   }

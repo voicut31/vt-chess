@@ -13,6 +13,8 @@ class Vtchess extends React.Component {
     super(props)
 
     this.state = {
+      allowMoves: true,
+      endGame: '',
       pieces: Chess.getDefaultLineup(),
       position: []
     }
@@ -27,28 +29,40 @@ class Vtchess extends React.Component {
       "fromSquare": fromSquare,
       "toSquare": toSquare
     };
-    const validMove = await axios.post('http://localhost:8000/moves/valid-move', {
+    if (fromSquare === toSquare) {
+      return false;
+    }
+
+    const message = await axios.post('http://localhost:8000/moves/valid-move', {
       move: move,
       position: this.state.position
     })
       .then((response) => {
-        return response.data.message.valid === true;
+        return response.data.message;
 
       })
       .catch((error) => {
         console.log(error);
       });
-
+    const validMove = message.valid;
     if (validMove === false) {
+
       this.setState({ pieces: [] });
       this.setState({ pieces: Pieces });
     } else {
       const position = this.state.position;
       position.push(fromSquare + toSquare);
       this.setState({ position: position });
+      if (message.endGame !== 0 && message.endGame !== undefined) {
+        this.setEndGame(message.endGame);
+      }
     }
 
     return false;
+  }
+
+  setEndGame(message) {
+    this.setState({ allowMoves: false, endGame: message });
   }
 
   handleMovePiece(piece, fromSquare, toSquare) {
@@ -67,14 +81,15 @@ class Vtchess extends React.Component {
   }
 
   render() {
-    const {pieces, position} = this.state
+    const { pieces, position, endGame } = this.state
     return (
       <div>
         <Header />
         <div className="mainContainer">
-            <RightContainer position={position} />
+            <RightContainer position={position} endGame={endGame} />
             <div className="left-container">
               <Chess
+                allowMoves={this.state.allowMoves}
                 pieces={pieces}
                 onDragStop={this.onDragStop}
                 onMovePiece={this.handleMovePiece}
