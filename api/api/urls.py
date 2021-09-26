@@ -19,6 +19,7 @@ from rest_framework import routers
 from django.contrib import admin
 from api import views
 from api.sfish.views import check_moves
+from rest_framework.authtoken.views import obtain_auth_token
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
@@ -30,5 +31,6 @@ urlpatterns = [
     path('', include(router.urls)),
     url(r'^admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('api-token-auth/', obtain_auth_token, name='api_token_auth'),  # <-- And here
     url(r'^moves/valid-move$', check_moves),
 ]

@@ -1,4 +1,6 @@
-django
-djangorestframework
+django~=3.2.6
+djangorestframework~=3.12.4
 django-cors-headers
 python-chess
+stockfish~=3.17.0
+chess~=1.6.1

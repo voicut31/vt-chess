@@ -3,7 +3,8 @@ import chess
 
 stockfish = Stockfish('./../stockfish-10/Linux/stockfish_10_x64')
 
-def valid_move(data, position):
+
+def valid_move(data, position, computer):
     board = chess.Board()
     for move in position:
         board.push_san(move)
@@ -12,47 +13,63 @@ def valid_move(data, position):
         valid = True
     else:
         valid = False
-    best_move = ""
     info = stockfish.info
-    if (valid):
+
+    best_move = ''
+    if valid:
         position.append(uci_data)
-        endGame = end_game(position)
-        haveCheck = have_check(position)
+        is_end_game = end_game(position)
+        is_check = have_check(position)
+        if computer['play_with_computer']:
+            stockfish.set_position(position)
+            stockfish.depth = computer['level']
+            best_move = stockfish.get_best_move()
+
     else:
-        endGame = 'no'
-        haveCheck = 0
-    return { 'valid' : valid, 'best_move' : best_move, 'endGame' : endGame, 'haveCheck': haveCheck, 'info': info, 'position': position }
+        is_end_game = 'no'
+        is_check = 0
+
+    return {
+        'valid': valid,
+        'best_move': best_move,
+        'endGame': is_end_game,
+        'haveCheck': is_check,
+        'info': info,
+        'position': position
+    }
+
 
 def end_game(position):
     board = chess.Board()
     for move in position:
         board.push_san(move)
     if board.is_checkmate():
-        endGame = 'checkmate'
+        is_end_game = 'checkmate'
     elif board.is_stalemate():
-        endGame = 'stalemate'
+        is_end_game = 'stalemate'
     elif board.is_insufficient_material():
-        endGame = 'insufficient_material'
+        is_end_game = 'insufficient_material'
     elif board.can_claim_threefold_repetition():
-        endGame = 'can_claim_threefold_repetition'
+        is_end_game = 'can_claim_threefold_repetition'
     elif board.can_claim_fifty_moves():
-        endGame = 'can_claim_fifty_moves'
+        is_end_game = 'can_claim_fifty_moves'
     elif board.is_fivefold_repetition():
-        endGame = 'fivefold_repetition'
+        is_end_game = 'fivefold_repetition'
     elif board.is_seventyfive_moves():
-        endGame = 'seventyfive_moves'
+        is_end_game = 'seventyfive_moves'
     elif board.is_game_over():
-        endGame = 'game_over'
+        is_end_game = 'game_over'
     else:
-        endGame = 0
-    return endGame
+        is_end_game = 0
+    return is_end_game
+
 
 def have_check(position):
     board = chess.Board()
     for move in position:
         board.push_san(move)
     if board.is_check():
-        haveCheck = 1
+        is_check = 1
     else:
-        haveCheck = 0
-    return haveCheck
+        is_check = 0
+    return is_check
