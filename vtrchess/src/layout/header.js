@@ -15,8 +15,8 @@ function Header() {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.Item href="#/action-1">Play with a friend</Dropdown.Item>
-              <Dropdown.Item href="#/action-2">Play with computer</Dropdown.Item>
+              <Dropdown.Item href="/play-with-friend">Play with a friend</Dropdown.Item>
+              <Dropdown.Item href="/play-with-computer">Play with computer</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </Col>
@@ -26,7 +26,7 @@ function Header() {
               Account
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item href="#/action-1">Sign In</Dropdown.Item>
+              <Dropdown.Item href="/login">Sign In</Dropdown.Item>
               <Dropdown.Item href="#/action-2">Sign Up</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>

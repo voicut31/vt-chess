@@ -1,5 +1,5 @@
-const React = require('react')
-const piecePositionHoc = require('../piecePositionHoc')
+import React from 'react';
+import Piece from '../piecePositionHoc';
 
 function WhiteQueen(props) {
   return (
@@ -26,4 +26,4 @@ function WhiteQueen(props) {
   )
 }
 
-module.exports = piecePositionHoc(WhiteQueen)
+export default Piece(WhiteQueen)

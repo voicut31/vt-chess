@@ -243,4 +243,4 @@ Chess.defaultProps = {
 
 Chess.getDefaultLineup = getDefaultLineup
 
-module.exports = Chess
+export default Chess

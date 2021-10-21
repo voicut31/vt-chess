@@ -11,5 +11,13 @@ from api.sfish.moves import valid_move
 @api_view(['GET', 'POST'])
 def check_moves(request):
     if request.method == 'POST':
-        return Response({"message": valid_move(request.data['move'], request.data['position'], request.data['computer'])})
+        try:
+            computer = request.data['computer']
+        except KeyError:
+            computer = {
+                'play_with_computer': 0
+            }
+
+        return Response({"message": valid_move(request.data['move'], request.data['position'], computer)})
+        pass
     return Response({"message": valid_move('x')})

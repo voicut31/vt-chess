@@ -1,5 +1,5 @@
-const React = require('react')
-const piecePositionHoc = require('../piecePositionHoc')
+import React from 'react';
+import Piece from '../piecePositionHoc';
 
 function WhitePawn(props) {
   return (
@@ -16,4 +16,4 @@ function WhitePawn(props) {
   )
 }
 
-module.exports = piecePositionHoc(WhitePawn)
+export default Piece(WhitePawn)

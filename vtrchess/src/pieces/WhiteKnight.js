@@ -1,5 +1,5 @@
-const React = require('react')
-const piecePositionHoc = require('../piecePositionHoc')
+import React from 'react';
+import Piece from '../piecePositionHoc';
 
 function WhiteKnight(props) {
   return (
@@ -27,4 +27,4 @@ function WhiteKnight(props) {
   )
 }
 
-module.exports = piecePositionHoc(WhiteKnight)
+export default Piece(WhiteKnight)
